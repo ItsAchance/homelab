@@ -2,6 +2,7 @@ terraform {
     required_providers {
         proxmox = {
             source = "telmate/proxmox"
+            version = "3.0.2-rc01"
         }
     }
 }
@@ -28,19 +29,36 @@ resource "proxmox_vm_qemu" "vm-instance" {
     full_clone          = true
     cores               = 1
     memory              = 1024
+    agent               = 1
 
+  # Cloud-Init Drive (slot ide0)
     disk {
-        size            = "32G"
-        type            = "scsi"
+        slot            = "ide0"
+        type            = "cloudinit"
         storage         = "local-lvm"
-        discard         = "on"
+    }
+
+ # HDD (slot virtio0)
+    disk {
+        slot            = "scsi0"
+        size            = "32G"
+        type            = "disk"
+        storage         = "local-lvm"
+        discard         = true
     }
 
     network {
-        model     = "virtio"
-        bridge    = "vmbr0"
-        firewall  = false
-        link_down = false
+        id              = 0
+        model           = "virtio"
+        bridge          = "vmbr0"
+        firewall        = false
+        link_down       = false
     }
+
+    serial {
+        id              = 0
+        type            = "socket"
+  }
+
 
 }
