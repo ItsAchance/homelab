@@ -21,9 +21,15 @@ jobs:
       image: alpine:3.22
     steps:
      - uses: actions/checkout@v4
-     - name: Run my script
+     - name: Install required software
+       run: | 
+           apk update
+           apk add --no-cache curl
+           curl --proto '=https' --tlsv1.2 -fsSL https://get.opentofu.org/install-opentofu.sh -o install-opentofu.sh
+           chmod 700 install-opentofu.sh
+           ./install-opentofu.sh --install-method apk
+           rm -f install-opentofu.sh
+     
+     - name: Get Kanye quote
        run: |
-         echo "Running on Alpine!"
-         apk update
-         apk add --no-cache curl
-         curl https://api.kanye.rest
+           curl https://api.kanye.rest
