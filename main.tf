@@ -7,18 +7,30 @@ terraform {
     }
 }
 
-variable "token_secret" {
+variable "pm_url" {
   type        = string
 }
 
-variable "token_id" {
+variable "pm_token_secret" {
+  type        = string
+}
+
+variable "pm_token_id" {
+  type        = string
+}
+
+variable "ci_password" {
+  type        = string
+}
+
+variable "ci_user" {
   type        = string
 }
 
 provider "proxmox" {
-    pm_api_url          = "https://pve.achance.se:8006/api2/json"
-    pm_api_token_id     = var.token_id
-    pm_api_token_secret = var.token_secret
+    pm_api_url          = var.pm_url
+    pm_api_token_id     = var.pm_token_id
+    pm_api_token_secret = var.pm_token_secret
     pm_tls_insecure     = true
 }
 
@@ -27,9 +39,17 @@ resource "proxmox_vm_qemu" "vm-instance" {
     target_node         = "pve"
     clone               = "vm-template"
     full_clone          = true
+    scsihw              = "virtio-scsi-single"
     cores               = 1
     memory              = 1024
-    agent               = 1
+
+  # Cloud-Init configuration
+  ciupgrade             = true
+  ipconfig0             = "ip=dhcp,ip6=dhcp"
+  skip_ipv6             = true
+  ciuser                = var.ci_user
+  cipassword            = var.ci_password
+
 
   # Cloud-Init Drive (slot ide0)
     disk {
