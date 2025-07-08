@@ -24,13 +24,7 @@ jobs:
            ./install-opentofu.sh --install-method apk
            rm -f install-opentofu.sh
      
-  deploy_vm_terraform:
-    # The type of runner that the job will run on
-    runs-on: self-hosted
-    container:
-      image: alpine:3.22
-    steps:
      - uses: actions/checkout@v4
-    # - name: Run Terraform
-    #   run: |
-    #      tf apply --auto-approve
+     - name: Run Terraform
+       run: |
+          tf apply --auto-approve
