@@ -27,4 +27,4 @@ jobs:
      - uses: actions/checkout@v4
      - name: Run Terraform
        run: |
-          tf apply --auto-approve
+          tofu apply --auto-approve
