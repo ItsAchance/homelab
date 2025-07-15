@@ -1,10 +1,10 @@
 #!/bin/env bash
 set -e
 
-REPO_DIR="/code/homelab"
+REPO_DIR="~/code/homelab"
 REPO_URL="https://github.com/ItsAchance/homelab.git"
 BRANCH="main"
-LOG_FILE="gitops.log"
+LOG_FILE="~/code/homelab/gitops.log"
 DOCKER_COMPOSE_FILE="docker-compose.yaml"
 
 cd "$REPO_DIR" || git clone --branch "$BRANCH" "$REPO_URL" "$REPO_DIR" && cd "$REPO_DIR"
