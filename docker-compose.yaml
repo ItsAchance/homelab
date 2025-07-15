@@ -15,7 +15,7 @@ services:
     environment:
       # PW and username for testing
       POSTGRES_PASSWORD: postgre
-      POSTGRES_USER: postgre
+      POSTGRES_USER: johndoe
     ports:
     - 5432:5432
 
