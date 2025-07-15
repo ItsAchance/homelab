@@ -20,8 +20,6 @@ if [ "$LOCAL_HASH" != "$REMOTE_HASH" ]; then
     echo "[INFO] $(date) New commit found, pulling changes..." >> ${LOG_FILE}
     git fetch origin "$BRANCH"
     git reset --hard origin/"$BRANCH"
-
-    echo "[INFO] $(date) New commit found, pulling changes..." >> ${LOG_FILE}
     git pull origin "$BRANCH"
 
     echo "[INFO] $(date) Validating ${DOCKER_COMPOSE_FILE}..." >> ${LOG_FILE}
