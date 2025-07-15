@@ -36,4 +36,4 @@ if [ "$LOCAL_HASH" != "$REMOTE_HASH" ]; then
 
 else
     echo "[ERROR] $(date) No changes detected. Skipping." >> ${LOG_FILE}
-
+fi
