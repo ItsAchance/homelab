@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-REPO_DIR="${PWD}"
+REPO_DIR="/opt/homelab"
 REPO_URL="https://github.com/ItsAchance/homelab.git"
 BRANCH="main"
 LOG_FILE="${REPO_DIR}/gitops.log"
