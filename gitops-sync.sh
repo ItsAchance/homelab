@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
+
+# This is a bash script that mimics some of FluxCD's behavior.
+# It uses a GitHub repo as the source of truth and will discard any locally
+# commited changes to keep in sync with the remote repo. This runs as a systemd
+# unit on the target machine.
+
 REPO_DIR="/opt/homelab"
 REPO_URL="https://github.com/ItsAchance/homelab.git"
 BRANCH="main"
