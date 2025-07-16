@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-REPO_DIR="/Users/achance/code/homelab"
+REPO_DIR="${PWD}"
 REPO_URL="https://github.com/ItsAchance/homelab.git"
 BRANCH="main"
 LOG_FILE="${REPO_DIR}/gitops.log"
