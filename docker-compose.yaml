@@ -4,4 +4,4 @@ services:
     container_name: nginx
     restart: unless-stopped 
     ports:
-      - 8082:80
+      - 8083:80
