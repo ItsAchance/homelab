@@ -1,15 +1,21 @@
 #!/usr/bin/env bash
-set -e
-
 REPO_DIR="${PWD}"
 REPO_URL="https://github.com/ItsAchance/homelab.git"
 BRANCH="main"
 LOG_FILE="${REPO_DIR}/gitops.log"
 DOCKER_COMPOSE_FILE="docker-compose.yaml"
+
+echo "[INFO] Checking for Git repo in ${REPO_DIR}" >> ${LOG_FILE}
+if [ ! -d "${REPO_DIR}/.git" ]; then
+    echo "[INFO] Git repo not found in ${REPO_DIR}. Cloning..." >> ${LOG_FILE}
+    rm -rf "$REPO_DIR"
+    git clone --branch "$BRANCH" "$REPO_URL" "$REPO_DIR"
+fi
+    
+cd $REPO_DIR
+
 LOCAL_HASH=$(git rev-parse HEAD)
 REMOTE_HASH=$(git rev-parse origin/"$BRANCH")
-
-cd "$REPO_DIR" || git clone --branch "$BRANCH" "$REPO_URL" "$REPO_DIR" && cd "$REPO_DIR"
 
 if [ ! -f ${LOG_FILE} ]; then
     echo "[INFO] $(date) ${LOG_FILE} not present, creating it..." >> ${LOG_FILE}
