@@ -3,4 +3,4 @@
     - Terraform/Opentofu
     - Ansible
     - Docker
-    - Docker Swarm
+    - GitOps
