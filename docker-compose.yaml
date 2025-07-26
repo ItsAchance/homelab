@@ -29,6 +29,8 @@ services:
       - CREATE_ADMIN=1
       - ADMIN_USERNAME=admin
       - ADMIN_PASSWORD=test123
+      - POLLING_FREQUENCY=20
+      - FETCH_YOUTUBE_WATCH_TIME=1
   
   miniflux-db:
     image: postgres:17-alpine
