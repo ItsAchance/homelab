@@ -19,7 +19,7 @@ services:
     image: miniflux/miniflux:latest
     container_name: miniflux
     ports:
-      - 8181:8080
+      - 8084:8080
     depends_on:
       db:
         condition: service_healthy
