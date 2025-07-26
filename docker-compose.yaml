@@ -21,7 +21,7 @@ services:
     ports:
       - 8084:8080
     depends_on:
-      db:
+      miniflux-db:
         condition: service_healthy
     environment:
       - DATABASE_URL=postgres://miniflux:secret@miniflux-db/miniflux?sslmode=disable
