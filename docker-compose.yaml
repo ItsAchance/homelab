@@ -59,7 +59,7 @@ services:
     environment:
       - SECRET_ENCRYPTION_KEY=$HOMARR_KEY
     ports:
-      - 7575:7575
+      - 7577:7575
     restart: unless-stopped
 
 volumes:
