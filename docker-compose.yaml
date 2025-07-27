@@ -48,7 +48,7 @@ services:
 
   homarr:
     container_name: homarr
-    image: ghcr.io/homarr-labs/homarr:1.30.1
+    image: ghcr.io/homarr-labs/homarr:1.30.0
     volumes:
       - ./homarr/configs:/app/data/configs
       - ./homarr/icons:/app/public/icons
