@@ -77,7 +77,9 @@ services:
       - traefik.enable=true
       - traefik.http.routers.homarr.rule=Host(`homarr.dockerdebian.achance.se`)
       - traefik.http.routers.homarr.entrypoints=web
+      - traefik.http.apps.homarr.loadbalancer.server.port=7575
     environment:
+      - BASE_URL=homarr.dockerdebian.achance.se
       - SECRET_ENCRYPTION_KEY=${HOMARR_KEY}
     restart: unless-stopped
     networks:
