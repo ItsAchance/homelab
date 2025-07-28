@@ -67,24 +67,6 @@ services:
     networks:
       - traefik_proxy
 
-  homarr:
-    container_name: homarr
-    image: ghcr.io/homarr-labs/homarr:latest
-    volumes:
-      - ./homarr/configs:/app/data/configs
-      - ./homarr/icons:/app/public/icons
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.homarr.rule=Host(`homarr.dockerdebian.achance.se`)
-      - traefik.http.routers.homarr.entrypoints=web
-      - traefik.http.apps.homarr.loadbalancer.server.port=7575
-    environment:
-      - BASE_URL=homarr.dockerdebian.achance.se
-      - SECRET_ENCRYPTION_KEY=${HOMARR_KEY}
-    restart: unless-stopped
-    networks:
-      - traefik_proxy
-
 volumes:
   miniflux-db:
 
