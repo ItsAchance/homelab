@@ -60,7 +60,7 @@ services:
       - traefik.http.routers.homarr.rule=Host(`homarr.dockerdebian.achance.se`)
       - traefik.http.routers.homarr.entrypoints=web
     environment:
-      - SECRET_ENCRYPTION_KEY=$HOMARR_KEY
+      - SECRET_ENCRYPTION_KEY=${HOMARR_KEY}
     restart: unless-stopped
     networks:
       - traefik_proxy
