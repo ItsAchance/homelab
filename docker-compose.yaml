@@ -9,11 +9,17 @@ services:
   uptime-kuma:
     image: louislam/uptime-kuma:1
     container_name: uptime-kuma
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.uptime-kuma.rule=Host(`uptime-kuma.dockerdebian.achance.se`)
+      - traefik.http.routers.uptime-kuma.entrypoints=web
     volumes:
       - ./uptime-kuma-data:/app/data
     ports:
       - 3001:3001
     restart: unless-stopped
+    networks:
+      - traefik_proxy
  
   miniflux:
     image: miniflux/miniflux:latest
@@ -23,6 +29,10 @@ services:
     depends_on:
       miniflux-db:
         condition: service_healthy
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.miniflux.rule=Host(`miniflux.dockerdebian.achance.se`)
+      - traefik.http.routers.miniflux.entrypoints=web
     environment:
       - DATABASE_URL=postgres://miniflux:secret@miniflux-db/miniflux?sslmode=disable
       - RUN_MIGRATIONS=1
@@ -31,6 +41,8 @@ services:
       - ADMIN_PASSWORD=test123
       - POLLING_FREQUENCY=20
       - FETCH_YOUTUBE_WATCH_TIME=1
+    networks:
+      - traefik_proxy
   
   miniflux-db:
     image: postgres:17-alpine
@@ -45,6 +57,8 @@ services:
       test: ["CMD", "pg_isready", "-U", "miniflux"]
       interval: 10s
       start_period: 30s
+    networks:
+      - traefik_proxy
 
   homarr:
     container_name: homarr
@@ -52,16 +66,21 @@ services:
     volumes:
       - ./homarr/configs:/app/data/configs
       - ./homarr/icons:/app/public/icons
-#    labels:
-#      - traefik.enable=true
-#      - traefik.http.routers.homarr.rule=Host(`homarr.dockerdebian.achance.se`)
-#      - traefik.http.routers.homarr.entrypoints=web
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.homarr.rule=Host(`homarr.dockerdebian.achance.se`)
+      - traefik.http.routers.homarr.entrypoints=web
     environment:
       - SECRET_ENCRYPTION_KEY=$HOMARR_KEY
     ports:
       - 7577:7575
     restart: unless-stopped
+    networks:
+      - traefik_proxy
 
 volumes:
   miniflux-db:
 
+networks:
+  traefik_proxy:
+    external: true
