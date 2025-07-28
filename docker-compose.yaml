@@ -15,8 +15,6 @@ services:
       - traefik.http.routers.uptime-kuma.entrypoints=web
     volumes:
       - ./uptime-kuma-data:/app/data
-    ports:
-      - 3001:3001
     restart: unless-stopped
     networks:
       - traefik_proxy
@@ -24,8 +22,6 @@ services:
   miniflux:
     image: miniflux/miniflux:latest
     container_name: miniflux
-    ports:
-      - 8084:8080
     depends_on:
       miniflux-db:
         condition: service_healthy
@@ -72,8 +68,6 @@ services:
       - traefik.http.routers.homarr.entrypoints=web
     environment:
       - SECRET_ENCRYPTION_KEY=$HOMARR_KEY
-    ports:
-      - 7577:7575
     restart: unless-stopped
     networks:
       - traefik_proxy
