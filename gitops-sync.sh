@@ -32,7 +32,7 @@ if [ "${LOCAL_HASH}" != "${REMOTE_HASH}" ]; then
     if docker compose -f ${DOCKER_COMPOSE_FILE} config >/dev/null 2>&1; then
         echo "[INFO] $(date) Compose file is valid. Redeploying..." >> ${LOG_FILE}
         docker compose -f ${DOCKER_COMPOSE_FILE} pull
-        docker compose -f ${DOCKER_COMPOSE_FILE} up -d
+        docker compose -f ${DOCKER_COMPOSE_FILE} up -d --remove-orphans
         echo "[INFO] $(date) Deploy successful." >> ${LOG_FILE}
     else
         echo "[ERROR] $(date) Invalid compose file. Skipping deploy." >> ${LOG_FILE}
