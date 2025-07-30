@@ -33,6 +33,7 @@ services:
   miniflux:
     image: miniflux/miniflux:latest
     container_name: miniflux
+    restart: unless-stopped
     depends_on:
       miniflux-db:
         condition: service_healthy
@@ -54,6 +55,7 @@ services:
   miniflux-db:
     image: postgres:17-alpine
     container_name: miniflux-db
+    restart: unless-stopped
     environment:
       - POSTGRES_USER=miniflux
       - POSTGRES_PASSWORD=secret
