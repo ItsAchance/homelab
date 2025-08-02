@@ -69,6 +69,19 @@ services:
     networks:
       - traefik_proxy
 
+  linkding:
+    image: sissbruecker/linkding:1.41.0
+    container_name: "linkding"
+    restart: unless-stopped
+    volumes:
+      - ./linkding/data/:/etc/linkding/data
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.linkding.rule=Host(`linkding.dockerdebian.achance.se`)
+      - traefik.http.routers.linkding.entrypoints=web
+    networks:
+      - traefik_proxy
+
 volumes:
   miniflux-db:
 
