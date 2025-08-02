@@ -81,9 +81,27 @@ services:
       - traefik.http.routers.linkding.entrypoints=web
     networks:
       - traefik_proxy
+  
+  wallabag:
+    image: wallabag/wallabag:2.6.13
+    container_name: wallabag
+    restart: unless-stopped
+    environment:
+      - SYMFONY__ENV__DATABASE_DRIVER=pdo_sqlite
+      - SYMFONY__ENV__DATABASE_PATH=/var/www/wallabag/data/wallabag.sqlite
+    volumes:
+      - wallabag-db:/var/www/wallabag/data
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.wallabag.rule=Host(`wallabag.dockerdebian.achance.se`)
+      - traefik.http.routers.wallabag.entrypoints=web
+    networks:
+      - traefik_proxy
+
 
 volumes:
   miniflux-db:
+  wallabag-db:
 
 networks:
   traefik_proxy:
