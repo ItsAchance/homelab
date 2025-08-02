@@ -98,10 +98,30 @@ services:
     networks:
       - traefik_proxy
 
+  archivebox:
+    image: archivebox/archivebox:0.7.3
+    container_name: archivebox
+    command: server --quick-init 0.0.0.0:8000
+    volumes:
+      - archivebox-db:/data
+    environment:
+      - ALLOWED_HOSTS=*
+      - TIME_ZONE=Europe/Stockholm
+      - MEDIA_MAX_SIZE=750m
+      - USE_COLOR=True
+    networks:
+      - traefik_proxy
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.archivebox.rule=Host(`archivebox.dockerdebian.achance.se`)
+      - traefik.http.routers.archivebox.entrypoints=web
+      - traefik.http.services.archivebox.loadbalancer.server.port=8000
+    restart: unless-stopped
 
 volumes:
   miniflux-db:
   wallabag-db:
+  archivebox-db:
 
 networks:
   traefik_proxy:
