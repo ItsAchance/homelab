@@ -83,11 +83,11 @@ services:
       - traefik_proxy
   
   wallabag:
-    image: wallabag/wallabag:2.6.13
+    image: wallabag/wallabag:2.6.12
     container_name: wallabag
     restart: unless-stopped
     environment:
-      - SYMFONY__ENV__DATABASE_DRIVER=pdo_sqlite
+     # - SYMFONY__ENV__DATABASE_DRIVER=pdo_sqlite
       - SYMFONY__ENV__DATABASE_PATH=/var/www/wallabag/data/wallabag.sqlite
     volumes:
       - wallabag-db:/var/www/wallabag/data
