@@ -1,6 +1,2 @@
-.terraform
-credentials.auto.tfvars
-terraform.tfstate
-terraform.tfstate.backup
 gitops.log
 .env
