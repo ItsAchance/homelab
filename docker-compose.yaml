@@ -2,17 +2,39 @@ services:
   traefik:
     image: traefik:v3.3
     container_name: traefik
+    env_file:
+      - .env
     command:
       - --log.level=DEBUG
-      - --api.insecure=true
+      - --api.insecure=false
+      - --api.dashboard=true
       - --providers.docker=true
       - --providers.docker.exposedbydefault=false
       - --entryPoints.web.address=:80
+      - --entrypoints.websecure.address=:443
+      - --certificatesresolvers.myresolver.acme.dnschallenge=true
+      - --certificatesresolvers.myresolver.acme.dnschallenge.provider=cloudflare
+      - --certificatesresolvers.myresolver.acme.dnschallenge.resolvers=1.1.1.1:53,8.8.8.8:53
+      - --certificatesresolvers.myresolver.acme.email=${ACME_EMAIL}
+      - --certificatesresolvers.myresolver.acme.storage=/acme.json
+      - --entrypoints.web.http.redirections.entrypoint.to=websecure
+      - --entrypoints.web.http.redirections.entrypoint.scheme=https
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.traefik.rule=Host(`traefik.dockerdebian.achance.se`)
+      - traefik.http.routers.traefik.entrypoints=websecure
+      - traefik.http.routers.traefik.service=api@internal
+      - traefik.http.routers.traefik.tls.certresolver=${CERT_RESOLVER}
+      - traefik.http.middlewares.auth.basicauth.users=${DASHBOARD_AUTH}
+      - traefik.http.middlewares.ipwhitelist.ipwhitelist.sourcerange=${ALLOW_LIST}
+      - traefik.http.routers.traefik-dashboard.middlewares=auth,ipwhitelist
     ports:
       - 80:80
-      - 8088:8080
+      #- 8088:8080
+      - 443:443
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./acme.json:/acme.json
     restart: unless-stopped
     networks:
       - traefik_proxy
@@ -23,7 +45,8 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.uptime-kuma.rule=Host(`uptime-kuma.dockerdebian.achance.se`)
-      - traefik.http.routers.uptime-kuma.entrypoints=web
+      - traefik.http.routers.uptime-kuma.entrypoints=websecure
+      - traefik.http.routers.uptime-kuma.tls.certresolver=${CERT_RESOLVER}
     volumes:
       - /home/achance/docker/uptime-kuma-data:/app/data
     restart: unless-stopped
@@ -71,7 +94,7 @@ services:
 
   linkding:
     image: sissbruecker/linkding:1.41.0
-    container_name: "linkding"
+    container_name: linkding
     restart: unless-stopped
     volumes:
       - ./linkding/data/:/etc/linkding/data
