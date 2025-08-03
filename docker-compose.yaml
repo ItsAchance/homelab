@@ -12,11 +12,12 @@ services:
       - --providers.docker.exposedbydefault=false
       - --entryPoints.web.address=:80
       - --entrypoints.websecure.address=:443
-      - --certificatesresolvers.myresolver.acme.dnschallenge=true
-      - --certificatesresolvers.myresolver.acme.dnschallenge.provider=cloudflare
-      - --certificatesresolvers.myresolver.acme.dnschallenge.resolvers=1.1.1.1:53,8.8.8.8:53
-      - --certificatesresolvers.myresolver.acme.email=${ACME_EMAIL}
-      - --certificatesresolvers.myresolver.acme.storage=/acme.json
+      - --certificatesresolvers.le.acme.dnschallenge=true
+      - --certificatesresolvers.le.acme.dnschallenge.provider=cloudflare
+      - --certificatesresolvers.le.acme.dnschallenge.resolvers=1.1.1.1:53,8.8.8.8:53
+      - --certificatesresolvers.le.acme.email=${ACME_EMAIL}
+      - --certificatesresolvers.le.acme.storage=acme.json
+      - --certificatesresolvers.le.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory
       - --entrypoints.web.http.redirections.entrypoint.to=websecure
       - --entrypoints.web.http.redirections.entrypoint.scheme=https
     labels:
@@ -27,7 +28,7 @@ services:
       - traefik.http.routers.traefik.tls.certresolver=${CERT_RESOLVER}
       - traefik.http.middlewares.auth.basicauth.users=${DASHBOARD_AUTH}
       - traefik.http.middlewares.ipwhitelist.ipwhitelist.sourcerange=${ALLOW_LIST}
-      - traefik.http.routers.traefik-dashboard.middlewares=auth,ipwhitelist
+      - traefik.http.routers.traefik.middlewares=auth,ipwhitelist
     ports:
       - 80:80
       #- 8088:8080
@@ -68,8 +69,8 @@ services:
       - DATABASE_URL=postgres://miniflux:secret@miniflux-db/miniflux?sslmode=disable
       - RUN_MIGRATIONS=1
       - CREATE_ADMIN=1
-      - ADMIN_USERNAME=admin
-      - ADMIN_PASSWORD=test123
+      - ADMIN_USERNAME=${MINIFLUX_USER}
+      - ADMIN_PASSWORD=${MINIFLUX_PW}
       - POLLING_FREQUENCY=20
       - FETCH_YOUTUBE_WATCH_TIME=1
     networks:
