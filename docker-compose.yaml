@@ -31,7 +31,6 @@ services:
       - traefik.http.routers.traefik.middlewares=auth,ipwhitelist
     ports:
       - 80:80
-      #- 8088:8080
       - 443:443
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
@@ -64,9 +63,10 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.miniflux.rule=Host(`miniflux.dockerdebian.achance.se`)
-      - traefik.http.routers.miniflux.entrypoints=web
+      - traefik.http.routers.miniflux.entrypoints=websecure
+      - traefik.http.routers.miniflux.tls.certresolver=${CERT_RESOLVER}
     environment:
-      - DATABASE_URL=postgres://miniflux:secret@miniflux-db/miniflux?sslmode=disable
+      - DATABASE_URL=postgres://${MINIFLUX_DB_USER}:${MINIFLUX_DB_PW}@${MINIFLUX_DB_NAME}-db/miniflux?sslmode=disable
       - RUN_MIGRATIONS=1
       - CREATE_ADMIN=1
       - ADMIN_USERNAME=${MINIFLUX_USER}
@@ -81,9 +81,9 @@ services:
     container_name: miniflux-db
     restart: unless-stopped
     environment:
-      - POSTGRES_USER=miniflux
-      - POSTGRES_PASSWORD=secret
-      - POSTGRES_DB=miniflux
+      - POSTGRES_USER=${MINIFLUX_DB_USER}
+      - POSTGRES_PASSWORD=${MINIFLUX_DB_PW}
+      - POSTGRES_DB=${MINIFLUX_DB_NAME}
     volumes:
       - miniflux-db:/var/lib/postgresql/data
     healthcheck:
@@ -102,7 +102,8 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.linkding.rule=Host(`linkding.dockerdebian.achance.se`)
-      - traefik.http.routers.linkding.entrypoints=web
+      - traefik.http.routers.linkding.entrypoints=websecure
+      - traefik.http.routers.linkding.tls.certresolver=${CERT_RESOLVER}
     networks:
       - traefik_proxy
   
@@ -118,7 +119,8 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.wallabag.rule=Host(`wallabag.dockerdebian.achance.se`)
-      - traefik.http.routers.wallabag.entrypoints=web
+      - traefik.http.routers.wallabag.entrypoints=websecure
+      - traefik.http.routers.wallabag.tls.certresolver=${CERT_RESOLVER}
     networks:
       - traefik_proxy
 
@@ -138,7 +140,8 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.archivebox.rule=Host(`archivebox.dockerdebian.achance.se`)
-      - traefik.http.routers.archivebox.entrypoints=web
+      - traefik.http.routers.archivebox.entrypoints=websecure
+      - traefik.http.routers.archivebox.tls.certresolver=${CERT_RESOLVER}
       - traefik.http.services.archivebox.loadbalancer.server.port=8000
     restart: unless-stopped
 
