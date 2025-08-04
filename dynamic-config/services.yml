@@ -12,6 +12,6 @@ http:
         passHostHeader: true
         serversTransport: insecure-transport
 
-serversTransports:
-  insecure-transport:
-    insecureSkipVerify: true
+  serversTransports:
+    insecure-transport:
+      insecureSkipVerify: true
