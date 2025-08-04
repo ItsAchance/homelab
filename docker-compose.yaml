@@ -10,6 +10,8 @@ services:
       - --api.dashboard=true
       - --providers.docker=true
       - --providers.docker.exposedbydefault=false
+      - --providers.file.watch=true
+      - --providers.file.directory=dynamic-config
       - --entryPoints.web.address=:80
       - --entrypoints.websecure.address=:443
       - --certificatesresolvers.le.acme.dnschallenge=true
@@ -19,8 +21,6 @@ services:
       - --certificatesresolvers.le.acme.storage=acme.json
       - --entrypoints.web.http.redirections.entrypoint.to=websecure
       - --entrypoints.web.http.redirections.entrypoint.scheme=https
-      - --providers.file.directory=/etc/traefik/dynamic
-      - --providers.file.watch=true
     labels:
       - traefik.enable=true
       - traefik.http.routers.traefik.rule=Host(`traefik.dockerdebian.achance.se`)
