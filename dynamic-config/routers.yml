@@ -1,12 +1,5 @@
 http:
   routers:
-    truenas:
-      rule: "Host(`truenas.achance.se`)"
-      entryPoints: [websecure]
-      service: truenas
-      tls:
-        certResolver: le
-
     home-assistant:
       rule: "Host(`home-assistant.achance.se`)"
       entryPoints: [websecure]
@@ -20,3 +13,11 @@ http:
       service: proxmox
       tls:
         certResolver: le
+
+    truenas:
+      rule: "Host(`truenas.achance.se`)"
+      entryPoints: [websecure]
+      service: truenas
+      tls:
+        certResolver: le
+
