@@ -6,3 +6,11 @@ http:
       service: home-assistant
       tls:
         certResolver: le
+    
+    proxmox:
+      rule: "Host(`proxmox.achance.se`)"
+      entryPoints:
+        - websecure
+      service: proxmox
+      tls:
+        certResolver: le
