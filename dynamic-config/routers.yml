@@ -1,7 +1,7 @@
 http:
   routers:
     home-assistant:
-      rule: "Host(`home-assistant.dockerdebian.achance.se`)"
+      rule: "Host(`home-assistant.achance.se`)"
       entryPoints: [websecure]
       service: home-assistant
       tls:
