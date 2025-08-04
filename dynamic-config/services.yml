@@ -15,7 +15,7 @@ http:
     truenas:
       loadBalancer:
         servers:
-          - url: "http://192.168.200.15:443"
+          - url: "http://192.168.200.15:80"
 
 
   serversTransports:
