@@ -9,8 +9,7 @@ http:
     
     proxmox:
       rule: "Host(`proxmox.achance.se`)"
-      entryPoints:
-        - websecure
+      entryPoints: [websecure]
       service: proxmox
       tls:
         certResolver: le
