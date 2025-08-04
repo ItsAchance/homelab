@@ -1,5 +1,12 @@
 http:
   routers:
+    truenas:
+      entryPoints: [websecure]
+      rule: "Host(`truenas.achance.se`)"
+      service: truenas
+      tls:
+        certResolver: le
+
     home-assistant:
       rule: "Host(`home-assistant.achance.se`)"
       entryPoints: [websecure]
