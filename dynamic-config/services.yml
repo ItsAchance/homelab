@@ -4,3 +4,9 @@ http:
       loadBalancer:
         servers:
           - url: "http://192.168.200.6:8123"
+    
+    proxmox:
+      loadBalancer:
+        servers:
+          - url: "http://192.168.200.2:8006"
+        passHostHeader: true
