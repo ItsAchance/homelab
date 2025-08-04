@@ -147,10 +147,49 @@ services:
       - traefik.http.services.archivebox.loadbalancer.server.port=8000
     restart: unless-stopped
 
+  searxng:
+    container_name: searxng
+    image: docker.io/searxng/searxng:2025.8.3-2e62eb5
+    restart: unless-stopped
+    networks:
+      - traefik_proxy
+    volumes:
+      - ./searxng:/etc/searxng:rw
+      - searxng-data:/var/cache/searxng:rw
+    environment:
+      - SEARXNG_BASE_URL=https://${SEARXNG_HOSTNAME:-localhost}/
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.searxng.rule=Host(`searxng.dockerdebian.achance.se`)
+      - traefik.http.routers.searxng.entrypoints=websecure
+      - traefik.http.routers.searxng.tls.certresolver=${CERT_RESOLVER}
+
+  redis:
+    container_name: redis
+    image: docker.io/valkey/valkey:8-alpine
+    command: valkey-server --save 30 1 --loglevel warning
+    restart: unless-stopped
+    networks:
+      - traefik_proxy
+    volumes:
+      - valkey-data:/data
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+
 volumes:
   miniflux-db:
   wallabag-db:
   archivebox-db:
+  valkey-data:
+  searxng-data:
 
 networks:
   traefik_proxy:
