@@ -1,6 +1,6 @@
 http:
   services:
-    homea-ssistant:
+    home-assistant:
       loadBalancer:
         servers:
           - url: "http://192.168.200.6:8123"
