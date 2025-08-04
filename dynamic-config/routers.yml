@@ -1,8 +1,8 @@
 http:
   routers:
     truenas:
-      entryPoints: [websecure]
       rule: "Host(`truenas.achance.se`)"
+      entryPoints: [websecure]
       service: truenas
       tls:
         certResolver: le
