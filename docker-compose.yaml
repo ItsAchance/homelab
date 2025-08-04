@@ -19,6 +19,8 @@ services:
       - --certificatesresolvers.le.acme.storage=acme.json
       - --entrypoints.web.http.redirections.entrypoint.to=websecure
       - --entrypoints.web.http.redirections.entrypoint.scheme=https
+      - --providers.file.directory=/etc/traefik/dynamic
+      - --providers.file.watch=true
     labels:
       - traefik.enable=true
       - traefik.http.routers.traefik.rule=Host(`traefik.dockerdebian.achance.se`)
@@ -34,6 +36,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./acme.json:/acme.json
+      - ./dynamic-config:/etc/traefik/dynamic:ro
     restart: unless-stopped
     networks:
       - traefik_proxy
