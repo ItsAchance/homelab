@@ -184,6 +184,25 @@ services:
         max-size: "1m"
         max-file: "1"
 
+  filebrowser:
+    container_name: filebrowser
+    image: filebrowser/filebrowser:v2.42.1
+    restart: unless-stopped
+    networks:
+      - traefik_proxy
+    volumes:
+      - ./filebrowser/config:/config
+      - ${NFS_PATH}:/srv
+    environment:
+      - PUID=1000
+      - PGID=1000
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.filebrowser.rule=Host(`filebrowser.dockerdebian.achance.se`)
+      - traefik.http.routers.filebrowser.entrypoints=websecure
+      - traefik.http.routers.filebrowser.tls.certresolver=${CERT_RESOLVER}
+
+
 volumes:
   miniflux-db:
   wallabag-db:
