@@ -1,6 +1,5 @@
 {
   "platform": "github",
-  "logLevel": "info",
   "onboarding": false,
   "requireConfig": "optional",
   "dryRun": null,
