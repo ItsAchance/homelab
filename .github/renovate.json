@@ -1,3 +1,13 @@
 {
-  "extends": ["config:base"]
+  "platform": "github",
+  "logLevel": "info",
+  "onboarding": true,
+  "requireConfig": "optional",
+  "dryRun": null,
+  "repositories": [
+    "ItsAchance/homelab"
+  ],
+  "extends": [
+    "config:base"
+  ]
 }
