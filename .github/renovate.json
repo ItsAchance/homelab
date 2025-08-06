@@ -1,7 +1,6 @@
 {
   "dependencyDashboard": true,
   "dependencyDashboardApproval": false,
-  "platform": "github",
   "extends": ["config:recommended"],
   "onboarding": false,
   "requireConfig": "optional",
