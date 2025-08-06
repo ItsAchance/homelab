@@ -1,10 +1,10 @@
 {
-  "extends": ["config:base"],
-  "onboarding": true,
-  "requireConfig": "optional",
   "dependencyDashboard": true,
   "platform": "github",
-  "docker": {
-    "enabled": true
-  }
+  "extends": ["config:base"],
+  "onboarding": false,
+  "requireConfig": "optional",
+  "prCreation": "immediate",
+  "prHourlyLimit": 10,
+  "prConcurrentLimit": 5
 }
