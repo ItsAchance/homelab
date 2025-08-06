@@ -217,6 +217,8 @@ services:
       MEND_RNV_LOG_HISTORY_DIR: /logs
       MEND_RNV_SQLITE_FILE_PATH: /db/renovate-db.sqlite
       MEND_RNV_GITHUB_APP_KEY_FILE: /run/secrets/github_app_key
+    secrets:
+      - github_app_key
     volumes:
       - ./renovate/job-logs:/logs
       - ./renovate/db:/db
