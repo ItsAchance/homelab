@@ -2,7 +2,7 @@
   "dependencyDashboard": true,
   "dependencyDashboardApproval": false,
   "platform": "github",
-  "extends": ["config:base"],
+  "extends": ["config:recommended"],
   "onboarding": false,
   "requireConfig": "optional",
   "prCreation": "immediate",
