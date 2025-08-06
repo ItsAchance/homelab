@@ -1,11 +1,10 @@
 {
-  "platform": "github",
+  "extends": ["config:base"],
   "onboarding": false,
   "requireConfig": "optional",
-  "repositories": [
-    "ItsAchance/homelab"
-  ],
-  "extends": ["config:base"],
+  "prHourlyLimit": 10,
+  "dependencyDashboard": true,
+  "platform": "github",
   "docker": {
     "enabled": true
   }
