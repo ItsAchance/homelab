@@ -1,7 +1,7 @@
 {
   "platform": "github",
   "logLevel": "info",
-  "onboarding": true,
+  "onboarding": false,
   "requireConfig": "optional",
   "dryRun": null,
   "repositories": [
