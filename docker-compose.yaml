@@ -217,6 +217,7 @@ services:
       MEND_RNV_ADMIN_API_ENABLED: true
       MEND_RNV_LOG_HISTORY_DIR: /logs
       MEND_RNV_SQLITE_FILE_PATH: /db/renovate-db.sqlite
+      RENOVATE_CONFIG_FILE: /usr/src/app/config.json
     volumes:
       - ./renovate/job-logs:/logs
       - ./renovate/db:/db
