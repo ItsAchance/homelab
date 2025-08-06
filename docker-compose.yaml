@@ -217,12 +217,10 @@ services:
       MEND_RNV_ADMIN_API_ENABLED: true
       MEND_RNV_LOG_HISTORY_DIR: /logs
       MEND_RNV_SQLITE_FILE_PATH: /db/renovate-db.sqlite
-      MEND_RNV_GITHUB_APP_KEY: /run/secrets/github_app_key
-    secrets:
-      - github_app_key
     volumes:
       - ./renovate/job-logs:/logs
       - ./renovate/db:/db
+      - ./.secrets/github_app.pem:/usr/src/app/renovate.private-key.pem:ro
     networks:
       - traefik_proxy
     labels:
@@ -230,10 +228,6 @@ services:
       - traefik.http.routers.renovate.rule=Host(`renovate.dockerdebian.achance.se`)
       - traefik.http.routers.renovate.entrypoints=websecure
       - traefik.http.routers.renovate.tls.certresolver=${CERT_RESOLVER}
-
-secrets:
-  github_app_key:
-    file: .secrets/github_app.pem
 
 volumes:
   miniflux-db:
