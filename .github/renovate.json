@@ -2,11 +2,11 @@
   "platform": "github",
   "onboarding": false,
   "requireConfig": "optional",
-  "dryRun": null,
   "repositories": [
     "ItsAchance/homelab"
   ],
-  "extends": [
-    "config:base"
-  ]
+  "extends": ["config:base"],
+  "docker": {
+    "enabled": true
+  }
 }
