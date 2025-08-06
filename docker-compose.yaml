@@ -201,7 +201,36 @@ services:
       - traefik.http.routers.filebrowser.rule=Host(`filebrowser.dockerdebian.achance.se`)
       - traefik.http.routers.filebrowser.entrypoints=websecure
       - traefik.http.routers.filebrowser.tls.certresolver=${CERT_RESOLVER}
+       
+  renovate:
+    container_name: renovate
+    image: ghcr.io/mend/renovate-ce:11.0.0
+    restart: unless-stopped
+    env_file:
+      - .mend-renovate.env
+      - .github.env
+    environment:
+      LOG_LEVEL: debug
+      LOG_FORMAT: json
+      MEND_RNV_REQUEST_LOGGER_ENABLED: true
+      MEND_RNV_ADMIN_API_ENABLED: true
+      MEND_RNV_LOG_HISTORY_DIR: /logs
+      MEND_RNV_SQLITE_FILE_PATH: /db/renovate-db.sqlite
+      MEND_RNV_GITHUB_APP_KEY_FILE: /run/secrets/github_app_key
+    volumes:
+      - ./renovate/job-logs:/logs
+      - ./renovate/db:/db
+    networks:
+      - traefik_proxy
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.renovate.rule=Host(`renovate.dockerdebian.achance.se`)
+      - traefik.http.routers.renovate.entrypoints=websecure
+      - traefik.http.routers.renovate.tls.certresolver=${CERT_RESOLVER}
 
+secrets:
+  github_app_key:
+    file: .secrets/github_app.pem
 
 volumes:
   miniflux-db:
