@@ -221,7 +221,7 @@ services:
       - ./renovate/job-logs:/logs
       - ./renovate/db:/db
       - ./.secrets/github_app.pem:/usr/src/app/renovate.private-key.pem:ro
-      - ./github/config.json:/usr/src/app/config.json:ro
+      - ./github/renovate.json:/usr/src/app/config.json:ro
     networks:
       - traefik_proxy
     labels:
