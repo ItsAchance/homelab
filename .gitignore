@@ -1,3 +1,7 @@
 gitops.log
 .env
 acme.json
+.secrets
+.github.env
+.mend-renovate.env
+
