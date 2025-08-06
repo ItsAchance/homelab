@@ -221,6 +221,7 @@ services:
       - ./renovate/job-logs:/logs
       - ./renovate/db:/db
       - ./.secrets/github_app.pem:/usr/src/app/renovate.private-key.pem:ro
+      - ./github/config.json:/usr/src/app/config.json:ro
     networks:
       - traefik_proxy
     labels:
@@ -228,6 +229,18 @@ services:
       - traefik.http.routers.renovate.rule=Host(`renovate.dockerdebian.achance.se`)
       - traefik.http.routers.renovate.entrypoints=websecure
       - traefik.http.routers.renovate.tls.certresolver=${CERT_RESOLVER}
+
+  web01:
+    container_name: test-web
+    image: httpd:2.4-alpine3.22
+    restart: unless-stopped
+    networks:
+      - traefik_proxy
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.web01.rule=Host(`web01.dockerdebian.achance.se`)
+      - traefik.http.routers.web01.entrypoints=websecure
+      - traefik.http.routers.web01.tls.certresolver=${CERT_RESOLVER}
 
 volumes:
   miniflux-db:
