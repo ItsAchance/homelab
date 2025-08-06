@@ -232,7 +232,7 @@ services:
 
   web01:
     container_name: test-web
-    image: httpd:2.4-alpine3.22
+    image: nginx:1.28.0
     restart: unless-stopped
     networks:
       - traefik_proxy
