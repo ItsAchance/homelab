@@ -2,7 +2,6 @@
   "extends": ["config:base"],
   "onboarding": false,
   "requireConfig": "optional",
-  "prHourlyLimit": 10,
   "dependencyDashboard": true,
   "platform": "github",
   "docker": {
