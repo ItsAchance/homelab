@@ -1,6 +1,6 @@
 {
   "extends": ["config:base"],
-  "onboarding": false,
+  "onboarding": true,
   "requireConfig": "optional",
   "dependencyDashboard": true,
   "platform": "github",
