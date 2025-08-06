@@ -217,11 +217,12 @@ services:
       MEND_RNV_ADMIN_API_ENABLED: true
       MEND_RNV_LOG_HISTORY_DIR: /logs
       MEND_RNV_SQLITE_FILE_PATH: /db/renovate-db.sqlite
+      RENOVATE_CONFIG_FILE: /usr/src/app/renovate-config.json
     volumes:
       - ./renovate/job-logs:/logs
       - ./renovate/db:/db
       - ./.secrets/github_app.pem:/usr/src/app/renovate.private-key.pem:ro
-      - ./github/renovate.json:/usr/src/app/config.json:ro
+      - ./github/renovate.json:/usr/src/app/renovate.json:ro
     networks:
       - traefik_proxy
     labels:
