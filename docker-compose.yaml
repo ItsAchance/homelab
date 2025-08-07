@@ -207,16 +207,9 @@ services:
     image: ghcr.io/renovatebot/renovate:41.56
     restart: unless-stopped
     user: 1000:1000
-    env_file:
-#      - .mend-renovate.env
-#      - .github.env
     environment:
       -  LOG_LEVEL=debug
       -  LOG_FORMAT=json
-#      -  MEND_RNV_REQUEST_LOGGER_ENABLED=true
-#      -  MEND_RNV_ADMIN_API_ENABLED=true
-#      -  MEND_RNV_LOG_HISTORY_DIR=/logs
-#      -  MEND_RNV_SQLITE_FILE_PATH=/db/renovate-db.sqlite
       -  RENOVATE_CONFIG_FILE=/usr/src/app/config.json
       -  RENOVATE_PLATFORM=github
       -  RENOVATE_TOKEN=${RENOVATE_TOKEN}
@@ -224,7 +217,6 @@ services:
     volumes:
       - ./renovate/job-logs:/logs
       - ./renovate/db:/db
-#      - ./.secrets/github_app.pem:/usr/src/app/renovate.private-key.pem:ro
       - ./.github/renovate.json:/usr/src/app/config.json:ro
     networks:
       - traefik_proxy
