@@ -17,6 +17,12 @@ http:
         servers:
           - url: "http://192.168.200.15:80"
 
+    unifi:
+      loadBalancer:
+        servers:
+          - url: "https://unifi:8443"
+        serversTransport: insecure-transport
+
 
   serversTransports:
     insecure-transport:

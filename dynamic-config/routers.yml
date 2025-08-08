@@ -21,3 +21,9 @@ http:
       tls:
         certResolver: le
 
+    unifi:
+      rule: "Host(`unifi.dockerdebian.achance.se`)"
+      entryPoints: [websecure]
+      service: unifi
+      tls:
+        certResolver: le
