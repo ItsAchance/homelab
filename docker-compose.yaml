@@ -208,12 +208,12 @@ services:
     restart: unless-stopped
     user: 1000:1000
     environment:
-      -  LOG_LEVEL=debug
-      -  LOG_FORMAT=json
-      -  RENOVATE_CONFIG_FILE=/usr/src/app/config.json
-      -  RENOVATE_PLATFORM=github
-      -  RENOVATE_TOKEN=${RENOVATE_TOKEN}
-      -  RENOVATE_REPOSITORIES=ItsAchance/homelab
+      LOG_LEVEL: debug
+      LOG_FORMAT: json
+      RENOVATE_CONFIG_FILE: /usr/src/app/config.json
+      RENOVATE_PLATFORM: github
+      RENOVATE_TOKEN: ${RENOVATE_TOKEN}
+      RENOVATE_REPOSITORIES: '["ItsAchance/homeLab","ItsAchance/home-docker-compose"]'
     volumes:
       - ./renovate/job-logs:/logs
       - ./renovate/db:/db
