@@ -228,7 +228,7 @@ services:
 
   web01:
     container_name: test-web
-    image: nginx:1.29.0
+    image: nginx:1.29.1
     restart: unless-stopped
     networks:
       - traefik_proxy
