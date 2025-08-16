@@ -96,7 +96,7 @@ services:
       - traefik_proxy
 
   linkding:
-    image: sissbruecker/linkding:1.41.0
+    image: sissbruecker/linkding:1.42.0
     container_name: linkding
     restart: unless-stopped
     volumes:
