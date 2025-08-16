@@ -186,7 +186,7 @@ services:
 
   filebrowser:
     container_name: filebrowser
-    image: filebrowser/filebrowser:v2.42.3
+    image: filebrowser/filebrowser:v2.42.5
     restart: unless-stopped
     networks:
       - traefik_proxy
