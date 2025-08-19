@@ -204,7 +204,7 @@ services:
        
   renovate:
     container_name: renovate
-    image: ghcr.io/renovatebot/renovate:41.77
+    image: ghcr.io/renovatebot/renovate:41.81
     restart: unless-stopped
     user: 1000:1000
     environment:
