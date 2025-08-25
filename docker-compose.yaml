@@ -108,44 +108,6 @@ services:
       - traefik.http.routers.linkding.tls.certresolver=${CERT_RESOLVER}
     networks:
       - traefik_proxy
-  
-  wallabag:
-    image: wallabag/wallabag:2.6.13
-    container_name: wallabag
-    restart: unless-stopped
-    environment:
-      - SYMFONY__ENV__DOMAIN_NAME=http://wallabag.dockerdebian.achance.se
-      - SYMFONY__ENV__DATABASE_PATH=/var/www/wallabag/data/wallabag.sqlite
-    volumes:
-      - wallabag-db:/var/www/wallabag/data
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.wallabag.rule=Host(`wallabag.dockerdebian.achance.se`)
-      - traefik.http.routers.wallabag.entrypoints=websecure
-      - traefik.http.routers.wallabag.tls.certresolver=${CERT_RESOLVER}
-    networks:
-      - traefik_proxy
-
-  archivebox:
-    image: archivebox/archivebox:0.7.3
-    container_name: archivebox
-    command: server --quick-init 0.0.0.0:8000
-    volumes:
-      - archivebox-db:/data
-    environment:
-      - ALLOWED_HOSTS=*
-      - TIME_ZONE=Europe/Stockholm
-      - MEDIA_MAX_SIZE=750m
-      - USE_COLOR=True
-    networks:
-      - traefik_proxy
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.archivebox.rule=Host(`archivebox.dockerdebian.achance.se`)
-      - traefik.http.routers.archivebox.entrypoints=websecure
-      - traefik.http.routers.archivebox.tls.certresolver=${CERT_RESOLVER}
-      - traefik.http.services.archivebox.loadbalancer.server.port=8000
-    restart: unless-stopped
 
   searxng:
     container_name: searxng
@@ -226,22 +188,8 @@ services:
       - traefik.http.routers.renovate.entrypoints=websecure
       - traefik.http.routers.renovate.tls.certresolver=${CERT_RESOLVER}
 
-  web01:
-    container_name: test-web
-    image: nginx:1.29.1
-    restart: unless-stopped
-    networks:
-      - traefik_proxy
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.web01.rule=Host(`web01.dockerdebian.achance.se`)
-      - traefik.http.routers.web01.entrypoints=websecure
-      - traefik.http.routers.web01.tls.certresolver=${CERT_RESOLVER}
-
 volumes:
   miniflux-db:
-  wallabag-db:
-  archivebox-db:
   valkey-data:
   searxng-data:
 
