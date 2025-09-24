@@ -49,6 +49,8 @@ services:
       - traefik.http.routers.uptime-kuma.rule=Host(`uptime-kuma.dockerdebian.achance.se`)
       - traefik.http.routers.uptime-kuma.entrypoints=websecure
       - traefik.http.routers.uptime-kuma.tls.certresolver=${CERT_RESOLVER}
+      - traefik.http.middlewares.uptime-kuma.ipallowlist.sourcerange={ALLOWED_HOSTS_HA}
+
     volumes:
       - /home/achance/docker/uptime-kuma-data:/app/data
     restart: unless-stopped
