@@ -58,7 +58,7 @@ services:
       - traefik_proxy
  
   miniflux:
-    image: miniflux/miniflux:2.2.13
+    image: miniflux/miniflux:2.2.14
     container_name: miniflux
     restart: unless-stopped
     depends_on:
