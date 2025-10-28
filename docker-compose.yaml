@@ -89,7 +89,7 @@ services:
       - POSTGRES_PASSWORD=${MINIFLUX_DB_PW}
       - POSTGRES_DB=${MINIFLUX_DB_NAME}
     volumes:
-      - miniflux-db:/var/lib/postgresql/data
+      - miniflux-db:/var/lib/postgresql
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "miniflux"]
       interval: 10s
@@ -111,6 +111,7 @@ services:
     networks:
       - traefik_proxy
 
+<<<<<<< Updated upstream
   searxng:
     container_name: searxng
     image: docker.io/searxng/searxng:2025.8.3-2e62eb5
@@ -148,6 +149,8 @@ services:
         max-size: "1m"
         max-file: "1"
 
+=======
+>>>>>>> Stashed changes
   filebrowser:
     container_name: filebrowser
     image: filebrowser/filebrowser:v2.44.2
