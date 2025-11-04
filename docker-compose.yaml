@@ -153,6 +153,22 @@ services:
       - traefik.http.routers.renovate.entrypoints=websecure
       - traefik.http.routers.renovate.tls.certresolver=${CERT_RESOLVER}
 
+  kiwix-serve:
+    container_name: kiwix
+    image: ghcr.io/kiwix/kiwix-serve
+    restart: unless-stopped
+    volumes:
+      - ./kiwix:/data
+    command: '*.zim'
+    networks:
+      - traefik_proxy
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.kiwix.rule=Host(`kiwix.dockerdebian.achance.se`)
+      - traefik.http.routers.kiwix.entrypoints=websecure
+      - traefik.http.routers.kiwix.tls.certresolver=${CERT_RESOLVER}
+
+
 volumes:
   miniflux-db:
   valkey-data:
