@@ -89,7 +89,7 @@ services:
       - POSTGRES_PASSWORD=${MINIFLUX_DB_PW}
       - POSTGRES_DB=${MINIFLUX_DB_NAME}
     volumes:
-      - miniflux-db:/var/lib/postgresql
+      - miniflux-db:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "miniflux"]
       interval: 10s
