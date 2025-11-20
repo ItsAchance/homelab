@@ -46,7 +46,7 @@ services:
     container_name: uptime-kuma
     labels:
       - traefik.enable=true
-      - traefik.http.routers.uptime-kuma.rule=Host(`uptime-kuma.dockerdebian.achance.se`)
+      - traefik.http.routers.uptime-kuma.rule=Host(`uptime-kuma.achance.se`)
       - traefik.http.routers.uptime-kuma.entrypoints=websecure
       - traefik.http.routers.uptime-kuma.tls.certresolver=${CERT_RESOLVER}
       - traefik.http.middlewares.uptime-kuma.ipallowlist.sourcerange={ALLOWED_HOSTS_HA}
@@ -125,7 +125,7 @@ services:
       - PGID=1000
     labels:
       - traefik.enable=true
-      - traefik.http.routers.filebrowser.rule=Host(`filebrowser.dockerdebian.achance.se`)
+      - traefik.http.routers.filebrowser.rule=Host(`filebrowser.achance.se`)
       - traefik.http.routers.filebrowser.entrypoints=websecure
       - traefik.http.routers.filebrowser.tls.certresolver=${CERT_RESOLVER}
        
@@ -164,7 +164,7 @@ services:
       - traefik_proxy
     labels:
       - traefik.enable=true
-      - traefik.http.routers.kiwix.rule=Host(`kiwix.dockerdebian.achance.se`)
+      - traefik.http.routers.kiwix.rule=Host(`kiwix.achance.se`)
       - traefik.http.routers.kiwix.entrypoints=websecure
       - traefik.http.routers.kiwix.tls.certresolver=${CERT_RESOLVER}
       - traefik.http.services.kiwix.loadbalancer.server.port=8080
