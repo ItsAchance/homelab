@@ -105,7 +105,7 @@ services:
       - ./linkding/data/:/etc/linkding/data
     labels:
       - traefik.enable=true
-      - traefik.http.routers.linkding.rule=Host(`linkding.dockerdebian.achance.se`)
+      - traefik.http.routers.linkding.rule=Host(`linkding.achance.se`)
       - traefik.http.routers.linkding.entrypoints=websecure
       - traefik.http.routers.linkding.tls.certresolver=${CERT_RESOLVER}
     networks:
