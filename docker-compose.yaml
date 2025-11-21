@@ -23,7 +23,7 @@ services:
       - --entrypoints.web.http.redirections.entrypoint.scheme=https
     labels:
       - traefik.enable=true
-      - traefik.http.routers.traefik.rule=Host(`traefik.dockerdebian.achance.se`)
+      - traefik.http.routers.traefik.rule=Host(`traefik.achance.se`)
       - traefik.http.routers.traefik.entrypoints=websecure
       - traefik.http.routers.traefik.service=api@internal
       - traefik.http.routers.traefik.tls.certresolver=${CERT_RESOLVER}
