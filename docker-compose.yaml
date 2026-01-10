@@ -40,6 +40,7 @@ services:
     restart: unless-stopped
     networks:
       - traefik_proxy
+
   uptime-kuma:
     image: louislam/uptime-kuma:2
     container_name: uptime-kuma
@@ -49,50 +50,53 @@ services:
       - traefik.http.routers.uptime-kuma.entrypoints=websecure
       - traefik.http.routers.uptime-kuma.tls.certresolver=${CERT_RESOLVER}
       - traefik.http.middlewares.uptime-kuma.ipallowlist.sourcerange={ALLOWED_HOSTS_HA}
+
     volumes:
       - /home/achance/docker/uptime-kuma-data:/app/data
     restart: unless-stopped
     networks:
       - traefik_proxy
-      #  miniflux:
-      #    image: miniflux/miniflux:2.2.15
-      #    container_name: miniflux
-      #    restart: unless-stopped
-      #    depends_on:
-      #      miniflux-db:
-      #        condition: service_healthy
-      #    labels:
-      #      - traefik.enable=true
-      #      - traefik.http.routers.miniflux.rule=Host(`miniflux.achance.se`)
-      #      - traefik.http.routers.miniflux.entrypoints=websecure
-      #      - traefik.http.routers.miniflux.tls.certresolver=${CERT_RESOLVER}
-      #    environment:
-      #      - DATABASE_URL=postgres://${MINIFLUX_DB_USER}:${MINIFLUX_DB_PW}@${MINIFLUX_DB_NAME}-db/miniflux?sslmode=disable
-      #      - RUN_MIGRATIONS=1
-      #      - CREATE_ADMIN=1
-      #      - ADMIN_USERNAME=${MINIFLUX_USER}
-      #      - ADMIN_PASSWORD=${MINIFLUX_PW}
-      #      - POLLING_FREQUENCY=20
-      #      - FETCH_YOUTUBE_WATCH_TIME=1
-      #    networks:
-      #      - traefik_proxy
-      #  
-      #  miniflux-db:
-      #    image: postgres:17-alpine
-      #    container_name: miniflux-db
-      #    restart: unless-stopped
-      #    environment:
-      #      - POSTGRES_USER=${MINIFLUX_DB_USER}
-      #      - POSTGRES_PASSWORD=${MINIFLUX_DB_PW}
-      #      - POSTGRES_DB=${MINIFLUX_DB_NAME}
-      #    volumes:
-      #      - miniflux-db:/var/lib/postgresql/data
-      #    healthcheck:
-      #      test: ["CMD", "pg_isready", "-U", "miniflux"]
-      #      interval: 10s
-      #      start_period: 30s
-      #    networks:
-      #      - traefik_proxy
+ 
+  miniflux:
+    image: miniflux/miniflux:2.2.16
+    container_name: miniflux
+    restart: unless-stopped
+    depends_on:
+      miniflux-db:
+        condition: service_healthy
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.miniflux.rule=Host(`miniflux.achance.se`)
+      - traefik.http.routers.miniflux.entrypoints=websecure
+      - traefik.http.routers.miniflux.tls.certresolver=${CERT_RESOLVER}
+    environment:
+      - DATABASE_URL=postgres://${MINIFLUX_DB_USER}:${MINIFLUX_DB_PW}@${MINIFLUX_DB_NAME}-db/miniflux?sslmode=disable
+      - RUN_MIGRATIONS=1
+      - CREATE_ADMIN=1
+      - ADMIN_USERNAME=${MINIFLUX_USER}
+      - ADMIN_PASSWORD=${MINIFLUX_PW}
+      - POLLING_FREQUENCY=20
+      - FETCH_YOUTUBE_WATCH_TIME=1
+    networks:
+      - traefik_proxy
+  
+  miniflux-db:
+    image: postgres:17-alpine
+    container_name: miniflux-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=${MINIFLUX_DB_USER}
+      - POSTGRES_PASSWORD=${MINIFLUX_DB_PW}
+      - POSTGRES_DB=${MINIFLUX_DB_NAME}
+    volumes:
+      - miniflux-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "miniflux"]
+      interval: 10s
+      start_period: 30s
+    networks:
+      - traefik_proxy
+
   linkding:
     image: sissbruecker/linkding:1.45.0
     container_name: linkding
@@ -106,6 +110,7 @@ services:
       - traefik.http.routers.linkding.tls.certresolver=${CERT_RESOLVER}
     networks:
       - traefik_proxy
+
   filebrowser:
     container_name: filebrowser
     image: filebrowser/filebrowser:v2.53.1
@@ -123,6 +128,7 @@ services:
       - traefik.http.routers.filebrowser.rule=Host(`filebrowser.achance.se`)
       - traefik.http.routers.filebrowser.entrypoints=websecure
       - traefik.http.routers.filebrowser.tls.certresolver=${CERT_RESOLVER}
+       
   renovate:
     container_name: renovate
     image: ghcr.io/renovatebot/renovate:42.74
@@ -146,6 +152,7 @@ services:
       - traefik.http.routers.renovate.rule=Host(`renovate.dockerdebian.achance.se`)
       - traefik.http.routers.renovate.entrypoints=websecure
       - traefik.http.routers.renovate.tls.certresolver=${CERT_RESOLVER}
+
   kiwix-serve:
     container_name: kiwix
     image: ghcr.io/kiwix/kiwix-serve:3.8.1
@@ -161,10 +168,14 @@ services:
       - traefik.http.routers.kiwix.entrypoints=websecure
       - traefik.http.routers.kiwix.tls.certresolver=${CERT_RESOLVER}
       - traefik.http.services.kiwix.loadbalancer.server.port=8080
+
+
+
 volumes:
   miniflux-db:
   valkey-data:
   searxng-data:
+
 networks:
   traefik_proxy:
     external: true
