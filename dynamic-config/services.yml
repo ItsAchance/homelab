@@ -27,3 +27,10 @@ http:
   serversTransports:
     insecure-transport:
       insecureSkipVerify: true
+
+tcp:
+  services:
+    postgres:
+      loadBalancer:
+        servers:
+          - address: "3an-postgre-db:54321"

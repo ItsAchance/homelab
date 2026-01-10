@@ -27,3 +27,11 @@ http:
       service: unifi
       tls:
         certResolver: le
+tcp:
+  routers:
+    postgres:
+      rule: "HostSNI(`dockerdebian.achance.se:54321`)"
+      entryPoints: [postgres-tcp]
+      service: postgres
+      tls:
+        passthrough: true

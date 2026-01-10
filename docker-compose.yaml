@@ -14,6 +14,7 @@ services:
       - --providers.file.directory=/etc/traefik/dynamic
       - --entryPoints.web.address=:80
       - --entrypoints.websecure.address=:443
+      - --entrypoints.postgres-tcp.address=:54321
       - --certificatesresolvers.le.acme.dnschallenge=true
       - --certificatesresolvers.le.acme.dnschallenge.provider=cloudflare
       - --certificatesresolvers.le.acme.dnschallenge.resolvers=1.1.1.1:53,8.8.8.8:53
