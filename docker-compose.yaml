@@ -29,8 +29,9 @@ services:
       - traefik.http.routers.traefik.service=api@internal
       - traefik.http.routers.traefik.tls.certresolver=${CERT_RESOLVER}
       - traefik.http.middlewares.auth.basicauth.users=${DASHBOARD_AUTH}
+      - traefik.http.middlewares.trean-auth.basicauth.users=user:$$2y$$05$$EQi4B18CzRqKbQS7DnEyoecRCtCF7gNKwmXHZOubsv1WRHS4Qwz.G
       - traefik.http.middlewares.ipwhitelist.ipwhitelist.sourcerange=${ALLOW_LIST}
-      - traefik.http.routers.traefik.middlewares=auth,ipwhitelist
+      - traefik.http.routers.traefik.middlewares=auth,ipwhitelist,trean-auth
     ports:
       - 80:80
       - 443:443
