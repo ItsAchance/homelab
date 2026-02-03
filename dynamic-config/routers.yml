@@ -1,7 +1,7 @@
 http:
   routers:
     home-assistant:
-      rule: "Host(`home-assistant.achance.se`)"
+      rule: "Host(`homeassistant.bytechance.dev`)"
       entryPoints: [websecure]
       service: home-assistant
       tls:
@@ -15,7 +15,7 @@ http:
         certResolver: le
 
     truenas:
-      rule: "Host(`truenas.achance.se`)"
+      rule: "Host(`truenas.bytechance.dev`)"
       entryPoints: [websecure]
       service: truenas
       tls:
