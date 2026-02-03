@@ -24,7 +24,7 @@ services:
       - --entrypoints.web.http.redirections.entrypoint.scheme=https
     labels:
       - traefik.enable=true
-      - traefik.http.routers.traefik.rule=Host(`traefik.achance.se`)
+      - traefik.http.routers.traefik.rule=Host(`traefik.bytechance.dev`)
       - traefik.http.routers.traefik.entrypoints=websecure
       - traefik.http.routers.traefik.service=api@internal
       - traefik.http.routers.traefik.tls.certresolver=${CERT_RESOLVER}
@@ -55,19 +55,19 @@ services:
     restart: unless-stopped
     networks:
       - traefik_proxy
-  linkding:
-    image: sissbruecker/linkding:1.45.0
-    container_name: linkding
-    restart: unless-stopped
-    volumes:
-      - ./linkding/data/:/etc/linkding/data
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.linkding.rule=Host(`linkding.achance.se`)
-      - traefik.http.routers.linkding.entrypoints=websecure
-      - traefik.http.routers.linkding.tls.certresolver=${CERT_RESOLVER}
-    networks:
-      - traefik_proxy
+#  linkding:
+#    image: sissbruecker/linkding:1.45.0
+#    container_name: linkding
+#    restart: unless-stopped
+#    volumes:
+#      - ./linkding/data/:/etc/linkding/data
+#    labels:
+#      - traefik.enable=true
+#      - traefik.http.routers.linkding.rule=Host(`linkding.achance.se`)
+#      - traefik.http.routers.linkding.entrypoints=websecure
+#      - traefik.http.routers.linkding.tls.certresolver=${CERT_RESOLVER}
+#    networks:
+#      - traefik_proxy
   filebrowser:
     container_name: filebrowser
     image: filebrowser/filebrowser:v2.57.0
@@ -82,7 +82,7 @@ services:
       - PGID=1000
     labels:
       - traefik.enable=true
-      - traefik.http.routers.filebrowser.rule=Host(`filebrowser.achance.se`)
+      - traefik.http.routers.filebrowser.rule=Host(`filebrowser.bytechance.dev`)
       - traefik.http.routers.filebrowser.entrypoints=websecure
       - traefik.http.routers.filebrowser.tls.certresolver=${CERT_RESOLVER}
   renovate:
