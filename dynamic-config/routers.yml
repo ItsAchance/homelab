@@ -8,7 +8,7 @@ http:
         certResolver: le
     
     proxmox:
-      rule: "Host(`proxmox.achance.se`)"
+      rule: "Host(`proxmox.bytechance.dev`)"
       entryPoints: [websecure]
       service: proxmox
       tls:
@@ -22,7 +22,7 @@ http:
         certResolver: le
 
     unifi:
-      rule: "Host(`unifi.achance.se`)"
+      rule: "Host(`unifi.bytechance.dev`)"
       entryPoints: [websecure]
       service: unifi
       tls:
