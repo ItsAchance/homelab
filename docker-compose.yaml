@@ -123,10 +123,52 @@ services:
       - traefik.http.routers.kiwix.entrypoints=websecure
       - traefik.http.routers.kiwix.tls.certresolver=${CERT_RESOLVER}
       - traefik.http.services.kiwix.loadbalancer.server.port=8080
+
+  umami:
+    container_name: umami
+    image: ghcr.io/umami-software/umami:v3.0.3
+    environment:
+      DATABASE_URL: postgresql://${UMAMI_POSTGRES_USER}:${UMAMI_POSTGRES_PASSWORD}@db:5432/{UMAMI_DB}
+      APP_SECRET: ${UMAMI_APP_SECRET}
+    depends_on:
+      db:
+        condition: service_healthy
+    init: true
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl http://localhost:3000/api/heartbeat"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - traefik_proxy
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.umami.rule=Host(`umami.bytechance.dev`)
+      - traefik.http.routers.umami.entrypoints=websecure
+      - traefik.http.routers.umami.tls.certresolver=${CERT_RESOLVER}
+
+  umami-db:
+    container_name: umami-db
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: ${UMAMI_DB}
+      POSTGRES_USER: ${UMAMI_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${UMAMI_POSTGRES_PASSWORD}
+    volumes:
+      - umami-db-data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
 volumes:
   miniflux-db:
   valkey-data:
   searxng-data:
+  umami-db-data:
 networks:
   traefik_proxy:
     external: true
