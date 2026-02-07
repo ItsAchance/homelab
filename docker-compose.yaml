@@ -128,7 +128,7 @@ services:
     container_name: umami
     image: ghcr.io/umami-software/umami:3.0.3
     environment:
-      DATABASE_URL: postgresql://${UMAMI_POSTGRES_USER}:${UMAMI_POSTGRES_PASSWORD}@umami-db:5432/{UMAMI_DB}
+      DATABASE_URL: postgresql://${UMAMI_POSTGRES_USER}:${UMAMI_POSTGRES_PASSWORD}@umami-db:5432/${UMAMI_DB}
       APP_SECRET: ${UMAMI_APP_SECRET}
     depends_on:
       umami-db:
