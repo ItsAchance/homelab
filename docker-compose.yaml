@@ -158,6 +158,8 @@ services:
     volumes:
       - umami-db-data:/var/lib/postgresql/data
     restart: unless-stopped
+    networks:
+      - traefik_proxy
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
       interval: 5s
