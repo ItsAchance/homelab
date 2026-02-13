@@ -87,7 +87,7 @@ services:
       - traefik.http.routers.filebrowser.tls.certresolver=${CERT_RESOLVER}
   renovate:
     container_name: renovate
-    image: ghcr.io/renovatebot/renovate:43.11
+    image: ghcr.io/renovatebot/renovate:43.14
     restart: unless-stopped
     user: 1000:1000
     environment:
