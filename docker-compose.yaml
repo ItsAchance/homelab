@@ -70,7 +70,7 @@ services:
 #      - traefik_proxy
   filebrowser:
     container_name: filebrowser
-    image: filebrowser/filebrowser:v2.57.1
+    image: filebrowser/filebrowser:v2.58.0
     restart: unless-stopped
     networks:
       - traefik_proxy
