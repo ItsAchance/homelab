@@ -117,6 +117,7 @@ services:
       - traefik.http.middlewares.authelia.forwardAuth.address=https://auth.bytechance.dev/api/authz/forward-auth
       - traefik.http.middlewares.authelia.forwardAuth.trustForwardHeader=true
       - traefik.http.middlewares.authelia.forwardAuth.authResponseHeaders=Remote-User,Remote-Groups,Remote-Email,Remote-Name
+      - traefik.http.middlewares.authelia.forwardAuth.addAuthCookiesToResponse=authelia_session
       - traefik.http.routers.kiwix.middlewares=authelia
       
   umami:
