@@ -41,6 +41,7 @@ services:
     restart: unless-stopped
     networks:
       - traefik_proxy
+
   uptime-kuma:
     image: louislam/uptime-kuma:2
     container_name: uptime-kuma
@@ -55,19 +56,7 @@ services:
     restart: unless-stopped
     networks:
       - traefik_proxy
-#  linkding:
-#    image: sissbruecker/linkding:1.45.0
-#    container_name: linkding
-#    restart: unless-stopped
-#    volumes:
-#      - ./linkding/data/:/etc/linkding/data
-#    labels:
-#      - traefik.enable=true
-#      - traefik.http.routers.linkding.rule=Host(`linkding.achance.se`)
-#      - traefik.http.routers.linkding.entrypoints=websecure
-#      - traefik.http.routers.linkding.tls.certresolver=${CERT_RESOLVER}
-#    networks:
-#      - traefik_proxy
+
   filebrowser:
     container_name: filebrowser
     image: filebrowser/filebrowser:v2.59.0
@@ -85,6 +74,7 @@ services:
       - traefik.http.routers.filebrowser.rule=Host(`filebrowser.bytechance.dev`)
       - traefik.http.routers.filebrowser.entrypoints=websecure
       - traefik.http.routers.filebrowser.tls.certresolver=${CERT_RESOLVER}
+
   renovate:
     container_name: renovate
     image: ghcr.io/renovatebot/renovate:43.15
@@ -108,6 +98,7 @@ services:
       - traefik.http.routers.renovate.rule=Host(`renovate.dockerdebian.achance.se`)
       - traefik.http.routers.renovate.entrypoints=websecure
       - traefik.http.routers.renovate.tls.certresolver=${CERT_RESOLVER}
+
   kiwix-serve:
     container_name: kiwix
     image: ghcr.io/kiwix/kiwix-serve:3.8.1
@@ -123,7 +114,11 @@ services:
       - traefik.http.routers.kiwix.entrypoints=websecure
       - traefik.http.routers.kiwix.tls.certresolver=${CERT_RESOLVER}
       - traefik.http.services.kiwix.loadbalancer.server.port=8080
-
+      - traefik.http.middlewares.authelia.forwardAuth.address=https://auth.bytechance.dev/api/authz/forward-auth
+      - traefik.http.middlewares.authelia.forwardAuth.trustForwardHeader=true
+      - traefik.http.middlewares.authelia.forwardAuth.authResponseHeaders=Remote-User,Remote-Groups,Remote-Email,Remote-Name
+      - traefik.http.routers.myapp.middlewares=authelia
+      
   umami:
     container_name: umami
     image: ghcr.io/umami-software/umami:3.0.3
