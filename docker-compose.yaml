@@ -30,10 +30,7 @@ services:
       - traefik.http.routers.traefik.tls.certresolver=${CERT_RESOLVER}
       - traefik.http.middlewares.auth.basicauth.users=${DASHBOARD_AUTH}
       - traefik.http.middlewares.ipwhitelist.ipwhitelist.sourcerange=${ALLOW_LIST}
-      - traefik.http.middlewares.authelia.forwardAuth.address=https://auth.bytechance.dev/api/authz/forward-auth
-      - traefik.http.middlewares.authelia.forwardAuth.authResponseHeaders=Remote-User,Remote-Groups,Remote-Email,Remote-Name
       - traefik.http.routers.traefik.middlewares=auth,ipwhitelist
-      - traefik.http.middlewares.authelia.forwardAuth.trustForwardHeader=true
     ports:
       - 80:80
       - 443:443
@@ -117,7 +114,6 @@ services:
       - traefik.http.routers.kiwix.entrypoints=websecure
       - traefik.http.routers.kiwix.tls.certresolver=${CERT_RESOLVER}
       - traefik.http.services.kiwix.loadbalancer.server.port=8080
-      - traefik.http.routers.kiwix.middlewares=authelia@docker
       
   umami:
     container_name: umami
