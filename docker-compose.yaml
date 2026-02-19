@@ -99,21 +99,21 @@ services:
       - traefik.http.routers.renovate.entrypoints=websecure
       - traefik.http.routers.renovate.tls.certresolver=${CERT_RESOLVER}
 
-  kiwix-serve:
-    container_name: kiwix
-    image: ghcr.io/kiwix/kiwix-serve:3.8.1
-    restart: unless-stopped
-    volumes:
-      - ./kiwix:/data
-    command: '*.zim'
-    networks:
-      - traefik_proxy
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.kiwix.rule=Host(`kiwix.bytechance.dev`)
-      - traefik.http.routers.kiwix.entrypoints=websecure
-      - traefik.http.routers.kiwix.tls.certresolver=${CERT_RESOLVER}
-      - traefik.http.services.kiwix.loadbalancer.server.port=8080
+#  kiwix-serve:
+#    container_name: kiwix
+#    image: ghcr.io/kiwix/kiwix-serve:3.8.1
+#    restart: unless-stopped
+#    volumes:
+#      - ./kiwix:/data
+#    command: '*.zim'
+#    networks:
+#      - traefik_proxy
+#    labels:
+#      - traefik.enable=true
+#      - traefik.http.routers.kiwix.rule=Host(`kiwix.bytechance.dev`)
+#      - traefik.http.routers.kiwix.entrypoints=websecure
+#      - traefik.http.routers.kiwix.tls.certresolver=${CERT_RESOLVER}
+#      - traefik.http.services.kiwix.loadbalancer.server.port=8080
       
   umami:
     container_name: umami
