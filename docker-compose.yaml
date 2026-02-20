@@ -42,38 +42,38 @@ services:
     networks:
       - traefik_proxy
 
-  uptime-kuma:
-    image: louislam/uptime-kuma:2
-    container_name: uptime-kuma
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.uptime-kuma.rule=Host(`uptime-kuma.bytechance.dev`)
-      - traefik.http.routers.uptime-kuma.entrypoints=websecure
-      - traefik.http.routers.uptime-kuma.tls.certresolver=${CERT_RESOLVER}
-      - traefik.http.middlewares.uptime-kuma.ipallowlist.sourcerange={ALLOWED_HOSTS_HA}
-    volumes:
-      - /home/achance/docker/uptime-kuma-data:/app/data
-    restart: unless-stopped
-    networks:
-      - traefik_proxy
+#  uptime-kuma:
+#    image: louislam/uptime-kuma:2
+#    container_name: uptime-kuma
+#    labels:
+#      - traefik.enable=true
+#      - traefik.http.routers.uptime-kuma.rule=Host(`uptime-kuma.bytechance.dev`)
+#      - traefik.http.routers.uptime-kuma.entrypoints=websecure
+#      - traefik.http.routers.uptime-kuma.tls.certresolver=${CERT_RESOLVER}
+#      - traefik.http.middlewares.uptime-kuma.ipallowlist.sourcerange={ALLOWED_HOSTS_HA}
+#    volumes:
+#      - /home/achance/docker/uptime-kuma-data:/app/data
+#    restart: unless-stopped
+#    networks:
+#      - traefik_proxy
 
-  filebrowser:
-    container_name: filebrowser
-    image: filebrowser/filebrowser:v2.59.0
-    restart: unless-stopped
-    networks:
-      - traefik_proxy
-    volumes:
-      - ./filebrowser/config:/config
-      - ${NFS_PATH}:/srv
-    environment:
-      - PUID=1000
-      - PGID=1000
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.filebrowser.rule=Host(`filebrowser.bytechance.dev`)
-      - traefik.http.routers.filebrowser.entrypoints=websecure
-      - traefik.http.routers.filebrowser.tls.certresolver=${CERT_RESOLVER}
+#  filebrowser:
+#    container_name: filebrowser
+#    image: filebrowser/filebrowser:v2.59.0
+#    restart: unless-stopped
+#    networks:
+#      - traefik_proxy
+#    volumes:
+#      - ./filebrowser/config:/config
+#      - ${NFS_PATH}:/srv
+#    environment:
+#      - PUID=1000
+#      - PGID=1000
+#    labels:
+#      - traefik.enable=true
+#      - traefik.http.routers.filebrowser.rule=Host(`filebrowser.bytechance.dev`)
+#      - traefik.http.routers.filebrowser.entrypoints=websecure
+#      - traefik.http.routers.filebrowser.tls.certresolver=${CERT_RESOLVER}
 
   renovate:
     container_name: renovate
