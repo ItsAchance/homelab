@@ -123,6 +123,7 @@ services:
     environment:
       DATABASE_URL: postgresql://${UMAMI_POSTGRES_USER}:${UMAMI_POSTGRES_PASSWORD}@umami-db:5432/${UMAMI_DB}
       APP_SECRET: ${UMAMI_APP_SECRET}
+      CLIENT_IP_HEADER: cf-connecting-ip
     depends_on:
       umami-db:
         condition: service_healthy
