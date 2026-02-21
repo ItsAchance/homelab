@@ -22,7 +22,7 @@ services:
       - --certificatesresolvers.le.acme.storage=acme.json
       - --entrypoints.web.http.redirections.entrypoint.to=websecure
       - --entrypoints.web.http.redirections.entrypoint.scheme=https
-      #- --entrypoints.websecure.forwardedHeaders.trustedIPs=127.0.0.1/32,172.16.0.0/12,192.168.0.0/16,10.0.0.0/8"
+      - --entrypoints.websecure.forwardedHeaders.trustedIPs=127.0.0.1/32,172.16.0.0/12,192.168.0.0/16,10.0.0.0/8
 
     labels:
       - traefik.enable=true
