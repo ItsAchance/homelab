@@ -44,79 +44,30 @@ services:
     networks:
       - traefik_proxy
 
-#  uptime-kuma:
-#    image: louislam/uptime-kuma:2
-#    container_name: uptime-kuma
-#    labels:
-#      - traefik.enable=true
-#      - traefik.http.routers.uptime-kuma.rule=Host(`uptime-kuma.bytechance.dev`)
-#      - traefik.http.routers.uptime-kuma.entrypoints=websecure
-#      - traefik.http.routers.uptime-kuma.tls.certresolver=${CERT_RESOLVER}
-#      - traefik.http.middlewares.uptime-kuma.ipallowlist.sourcerange={ALLOWED_HOSTS_HA}
-#    volumes:
-#      - /home/achance/docker/uptime-kuma-data:/app/data
+#  renovate:
+#    container_name: renovate
+#    image: ghcr.io/renovatebot/renovate:43.31
 #    restart: unless-stopped
-#    networks:
-#      - traefik_proxy
-
-#  filebrowser:
-#    container_name: filebrowser
-#    image: filebrowser/filebrowser:v2.59.0
-#    restart: unless-stopped
-#    networks:
-#      - traefik_proxy
-#    volumes:
-#      - ./filebrowser/config:/config
-#      - ${NFS_PATH}:/srv
+#    user: 1000:1000
 #    environment:
-#      - PUID=1000
-#      - PGID=1000
-#    labels:
-#      - traefik.enable=true
-#      - traefik.http.routers.filebrowser.rule=Host(`filebrowser.bytechance.dev`)
-#      - traefik.http.routers.filebrowser.entrypoints=websecure
-#      - traefik.http.routers.filebrowser.tls.certresolver=${CERT_RESOLVER}
-
-  renovate:
-    container_name: renovate
-    image: ghcr.io/renovatebot/renovate:43.32
-    restart: unless-stopped
-    user: 1000:1000
-    environment:
-      LOG_LEVEL: debug
-      LOG_FORMAT: json
-      RENOVATE_CONFIG_FILE: /usr/src/app/config.json
-      RENOVATE_PLATFORM: github
-      RENOVATE_TOKEN: ${RENOVATE_TOKEN}
-      RENOVATE_REPOSITORIES: '["ItsAchance/homeLab","ItsAchance/home-docker-compose"]'
-    volumes:
-      - ./renovate/job-logs:/logs
-      - ./renovate/db:/db
-      - ./.github/renovate.json:/usr/src/app/config.json:ro
-    networks:
-      - traefik_proxy
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.renovate.rule=Host(`renovate.dockerdebian.achance.se`)
-      - traefik.http.routers.renovate.entrypoints=websecure
-      - traefik.http.routers.renovate.tls.certresolver=${CERT_RESOLVER}
-
-#  kiwix-serve:
-#    container_name: kiwix
-#    image: ghcr.io/kiwix/kiwix-serve:3.8.1
-#    restart: unless-stopped
+#      LOG_LEVEL: debug
+#      LOG_FORMAT: json
+#      RENOVATE_CONFIG_FILE: /usr/src/app/config.json
+#      RENOVATE_PLATFORM: github
+#      RENOVATE_TOKEN: ${RENOVATE_TOKEN}
+#      RENOVATE_REPOSITORIES: '["ItsAchance/homeLab","ItsAchance/home-docker-compose"]'
 #    volumes:
-#      - ./kiwix:/data
-#    command: '*.zim'
+#      - ./renovate/job-logs:/logs
+#      - ./renovate/db:/db
+#      - ./.github/renovate.json:/usr/src/app/config.json:ro
 #    networks:
 #      - traefik_proxy
 #    labels:
 #      - traefik.enable=true
-#      - traefik.http.routers.kiwix.rule=Host(`kiwix.bytechance.dev`)
-#      - traefik.http.routers.kiwix.entrypoints=websecure
-#      - traefik.http.routers.kiwix.tls.certresolver=${CERT_RESOLVER}
-#      - traefik.http.services.kiwix.loadbalancer.server.port=8080
-      
+#      - traefik.http.routers.renovate.rule=Host(`renovate.dockerdebian.achance.se`)
+#      - traefik.http.routers.renovate.entrypoints=websecure
+#      - traefik.http.routers.renovate.tls.certresolver=${CERT_RESOLVER}
+
   umami:
     container_name: umami
     image: ghcr.io/umami-software/umami:3.0.3
