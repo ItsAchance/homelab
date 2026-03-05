@@ -1,4 +1,4 @@
-services:
+#services:
 #  traefik:
 #    image: traefik:v3.6
 #    container_name: traefik
@@ -44,11 +44,11 @@ services:
 #    networks:
 #      - traefik_proxy
 
-volumes:
-  miniflux-db:
-  valkey-data:
-  searxng-data:
-  umami-db-data:
-networks:
-  traefik_proxy:
-    external: true
+#volumes:
+#  miniflux-db:
+#  valkey-data:
+#  searxng-data:
+#  umami-db-data:
+#networks:
+#  traefik_proxy:
+#    external: true
